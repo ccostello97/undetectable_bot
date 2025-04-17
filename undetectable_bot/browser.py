@@ -3,13 +3,6 @@ from pathlib import Path
 from playwright.sync_api import Browser, BrowserContext, Page, sync_playwright
 
 
-def create_data_dir() -> Path:
-    """Create data directory if it doesn't exist."""
-    data_dir = Path("data")
-    data_dir.mkdir(exist_ok=True)
-    return data_dir
-
-
 def launch_stealth_browser(*, headless: bool = True) -> None:
     """Launch a stealth browser with anti-detection measures."""
     with sync_playwright() as p:
@@ -75,7 +68,8 @@ def launch_stealth_browser(*, headless: bool = True) -> None:
             page.wait_for_load_state("networkidle")
 
             # Create data directory
-            data_dir = create_data_dir()
+            data_dir = Path("data")
+            data_dir.mkdir(exist_ok=True)
 
             # Save screenshot
             screenshot_path = data_dir / "screenshot.png"
