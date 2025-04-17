@@ -1,4 +1,3 @@
-from pathlib import Path
 from types import TracebackType
 
 from playwright.sync_api import (
@@ -8,7 +7,7 @@ from playwright.sync_api import (
     sync_playwright,
 )
 
-from undetectable_bot.browser.constants import (
+from undetectable_bot.constants import (
     ARGS,
     CONTEXT_SETTINGS,
     STEALTH_JS_PATH,
@@ -61,25 +60,3 @@ class StealthBrowser:
         """Exit the synchronous context manager."""
         if self.playwright:
             self.playwright.stop()
-
-
-def test_sync_stealth_browser() -> None:
-    """Test the sync stealth browser."""
-    with StealthBrowser() as browser:
-        context = browser.new_context()
-        page = context.new_page()
-        page.goto("https://bot.sannysoft.com/")
-        page.wait_for_load_state("networkidle")
-
-        data_dir = Path("data")
-        data_dir.mkdir(exist_ok=True)
-
-        screenshot_path = data_dir / "screenshot.png"
-        page.screenshot(path=str(screenshot_path), full_page=True)
-
-        html_path = data_dir / "index.html"
-        html_path.write_text(page.content(), encoding="utf-8")
-
-
-if __name__ == "__main__":
-    test_sync_stealth_browser()

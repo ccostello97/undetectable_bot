@@ -1,5 +1,3 @@
-import asyncio
-from pathlib import Path
 from types import TracebackType
 
 from playwright.async_api import (
@@ -9,7 +7,7 @@ from playwright.async_api import (
     async_playwright,
 )
 
-from undetectable_bot.browser.constants import (
+from undetectable_bot.constants import (
     ARGS,
     CONTEXT_SETTINGS,
     STEALTH_JS_PATH,
@@ -62,25 +60,3 @@ class AsyncStealthBrowser:
         """Exit the asynchronous context manager."""
         if self.playwright:
             await self.playwright.stop()
-
-
-async def test_async_stealth_browser() -> None:
-    """Test the async stealth browser."""
-    async with AsyncStealthBrowser() as browser:
-        context = await browser.new_context()
-        page = await context.new_page()
-        await page.goto("https://bot.sannysoft.com/")
-        await page.wait_for_load_state("networkidle")
-
-        data_dir = Path("data")
-        data_dir.mkdir(exist_ok=True)
-
-        screenshot_path = data_dir / "screenshot.png"
-        await page.screenshot(path=str(screenshot_path), full_page=True)
-
-        html_path = data_dir / "index.html"
-        html_path.write_text(await page.content(), encoding="utf-8")
-
-
-if __name__ == "__main__":
-    asyncio.run(test_async_stealth_browser())
