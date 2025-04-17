@@ -10,33 +10,32 @@ def create_data_dir() -> Path:
     return data_dir
 
 
-def launch_stealth_browser() -> None:
+def launch_stealth_browser(*, headless: bool = True) -> None:
     """Launch a stealth browser with anti-detection measures."""
     with sync_playwright() as p:
         browser: Browser = p.chromium.launch(
-            headless=True,  # Run in headless mode
+            headless=headless,
             args=[
-                "--no-sandbox",
-                "--disable-setuid-sandbox",
                 "--disable-infobars",
                 "--disable-blink-features=AutomationControlled",
+                "--ignore-certificate-errors",
+                "--ignore-certificate-errors-spki-list",
                 "--disable-web-security",
+                "--allow-running-insecure-content",
+                "--disable-domain-reliability",
+                "--disable-features=WebRtcHideLocalIpsWithMdns",
+                "--disable-background-timer-throttling",
+                "--disable-renderer-backgrounding",
+                "--disable-backgrounding-occluded-windows",
+                "--no-sandbox",
                 "--disable-dev-shm-usage",
-                "--ignore-gpu-blocklist",
-                "--enable-gpu",
-                "--use-gl=egl",  # Use EGL instead of desktop GL for better headless support
-                "--enable-webgl",
-                "--enable-webgl2",
-                "--enable-accelerated-2d-canvas",
-                "--enable-accelerated-video-decode",
-                "--enable-accelerated-video-encode",
-                "--enable-native-gpu-memory-buffers",
-                "--enable-gpu-rasterization",
-                "--enable-zero-copy",
-                "--disable-software-rasterizer",  # Force hardware acceleration
-                "--force-gpu-rasterization",
-                "--no-first-run",
-                "--no-default-browser-check",
+                "--disable-setuid-sandbox",
+                "--disable-gpu",
+                "--disable-extensions",
+                "--window-position=0,0",
+                "--disable-features=VizDisplayCompositor",
+                "--mute-audio",
+                "--disable-features=IsolateOrigins,site-per-process",
             ],
             chromium_sandbox=False,
         )
