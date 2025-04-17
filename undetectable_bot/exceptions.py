@@ -7,6 +7,7 @@ class StealthBrowserError(Exception):
 
 class BrowserNotInitializedError(StealthBrowserError):
     """Raised when trying to use StealthBrowser before init."""
+
     def __init__(self) -> None:
         super().__init__(
             "Browser not initialized. Use StealthBrowser as a context manager."

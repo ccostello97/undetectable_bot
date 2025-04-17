@@ -1,0 +1,26 @@
+{
+    "name": "undetectable_bot",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ccostello97/undetectable_bot.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ccostello97/undetectable_bot/issues"
+    },
+    "homepage": "https://github.com/ccostello97/undetectable_bot#readme",
+    "description": "",
+    "devDependencies": {
+        "eslint": "^9.24.0",
+        "eslint-config-prettier": "^10.1.2",
+        "eslint-plugin-prettier": "^5.2.6",
+        "prettier": "^3.5.3"
+    }
+}
