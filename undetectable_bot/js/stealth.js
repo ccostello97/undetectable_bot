@@ -1,15 +1,3 @@
-// Intercept property access at a lower level
-const proxyHandler = {
-  get: function (target, prop) {
-    if (prop === "webdriver") return undefined;
-    return target[prop];
-  },
-  has: function (target, prop) {
-    if (prop === "webdriver") return false;
-    return prop in target;
-  },
-};
-
 // Apply proxy to navigator prototype
 const navProto = Navigator.prototype;
 Object.defineProperties(navProto, {

@@ -1,7 +1,7 @@
 .PHONY: test-services clean lint type-check
 
 test-services:
-	python -m undetectable_bot.test_services
+	python -m undetectable_bot.utils.test_services
 
 clean:
 	rm -rf data/*
@@ -19,14 +19,14 @@ format-js:
 format: format-py format-js
 
 lint-py:
-	ruff . --fix
+	ruff check --fix .
 
 lint-js:
-	npx eslint "undetectable_bot/js/**/*.js" --fix
+	npx eslint --fix "undetectable_bot/js/**/*.js"
 
 lint: lint-py lint-js
 
 type-check:
 	mypy .
 
-all: clean lint format type-check test-services 
+all: clean lint format type-check test-services

@@ -1,33 +1,33 @@
 from types import TracebackType
 
-from playwright.async_api import (
+from playwright.sync_api import (
     Browser,
     BrowserContext,
     Playwright,
-    async_playwright,
+    sync_playwright,
 )
 
-from undetectable_bot.constants import (
+from undetectable_bot.utils.constants import (
     ARGS,
     CONTEXT_SETTINGS,
     STEALTH_JS_PATH,
 )
-from undetectable_bot.exceptions import BrowserNotInitializedError
+from undetectable_bot.utils.exceptions import BrowserNotInitializedError
 
 
-class AsyncStealthBrowser:
-    """An asynchronous version of StealthBrowser."""
+class StealthBrowser:
+    """A stealthy browser that evades detection."""
 
     def __init__(self, *, headless: bool = True) -> None:
         self.headless = headless
         self.browser: Browser | None = None
         self.playwright: Playwright | None = None
 
-    async def new_context(self) -> BrowserContext:
+    def new_context(self) -> BrowserContext:
         """Create a new browser context."""
         if not self.browser:
             raise BrowserNotInitializedError
-        context: BrowserContext = await self.browser.new_context(
+        context: BrowserContext = self.browser.new_context(
             viewport=CONTEXT_SETTINGS["viewport"],
             user_agent=CONTEXT_SETTINGS["user_agent"],
             color_scheme=CONTEXT_SETTINGS["color_scheme"],
@@ -38,25 +38,25 @@ class AsyncStealthBrowser:
             bypass_csp=CONTEXT_SETTINGS["bypass_csp"],
             extra_http_headers=CONTEXT_SETTINGS["extra_http_headers"],
         )
-        await context.add_init_script(path=str(STEALTH_JS_PATH))
+        context.add_init_script(path=str(STEALTH_JS_PATH))
         return context
 
-    async def __aenter__(self) -> "AsyncStealthBrowser":
-        """Enter the asynchronous context manager."""
-        self.playwright = await async_playwright().start()
-        self.browser = await self.playwright.chromium.launch(
+    def __enter__(self) -> "StealthBrowser":
+        """Enter the synchronous context manager."""
+        self.playwright = sync_playwright().start()
+        self.browser = self.playwright.chromium.launch(
             headless=self.headless,
             args=ARGS,
             chromium_sandbox=False,
         )
         return self
 
-    async def __aexit__(
+    def __exit__(
         self,
         exc_type: type[BaseException] | None,
         exc_value: BaseException | None,
         traceback: TracebackType | None,
     ) -> None:
-        """Exit the asynchronous context manager."""
+        """Exit the synchronous context manager."""
         if self.playwright:
-            await self.playwright.stop()
+            self.playwright.stop()

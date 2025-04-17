@@ -2,7 +2,7 @@
 Undetectable Bot - A stealthy browser automation tool.
 """
 
-from undetectable_bot.logging import configure_logging
+from undetectable_bot.utils.logging import configure_logging
 
 configure_logging()
 

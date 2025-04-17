@@ -6,7 +6,7 @@ from typing import Final
 from playwright.async_api import Error as PlaywrightError
 from playwright.async_api import Page
 
-from undetectable_bot.async_api import AsyncStealthBrowser
+from undetectable_bot.browser.async_api import AsyncStealthBrowser
 
 logger = logging.getLogger(__name__)
 

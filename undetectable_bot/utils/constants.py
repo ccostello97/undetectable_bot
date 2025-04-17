@@ -75,4 +75,4 @@ ARGS = [
     "--disable-features=IsolateOrigins,site-per-process",
 ]
 
-STEALTH_JS_PATH: Path = Path(__file__).parent / "js" / "stealth.js"
+STEALTH_JS_PATH: Path = Path(__file__).parent.parent / "js" / "stealth.js"
