@@ -27,10 +27,10 @@ const chromeObj = {
         isInstalled: false,
         InstallState: { DISABLED: 'disabled', INSTALLED: 'installed', NOT_INSTALLED: 'not_installed' },
         RunningState: { CANNOT_RUN: 'cannot_run', READY_TO_RUN: 'ready_to_run', RUNNING: 'running' },
-        getDetails: function () { return {}; },
-        getIsInstalled: function () { return false; },
-        installState: function () { return 'not_installed'; },
-        runningState: function () { return 'ready_to_run'; }
+        getDetails: function () { },
+        getIsInstalled: function () { },
+        installState: function () { return 'installed' },
+        runningState: function () { return 'running' }
     },
     runtime: {
         OnInstalledReason: {
@@ -52,25 +52,14 @@ const chromeObj = {
             THROTTLED: 'throttled',
             UPDATE_AVAILABLE: 'update_available'
         },
-        connect: function () { return {}; },
-        sendMessage: function () { return Promise.resolve(); },
-        getPlatformInfo: function () { return Promise.resolve({ os: 'mac', arch: 'x86-64' }); },
-        getManifest: function () { return { manifest_version: 2, name: 'Chrome', version: '120.0.0.0' }; },
-        id: 'aapbdbdomjkkjkaonfhkkikfgjllcleb'
+        connect: function () { },
+        sendMessage: function () { },
+        getPlatformInfo: function () { },
+        getManifest: function () { return {} },
+        id: undefined
     },
-    csi: function () { return { onloadT: 0, pageT: 0, startE: 0, tran: 0 }; },
-    loadTimes: function () {
-        return {
-            finishDocumentLoadTime: 0,
-            finishLoadTime: 0,
-            firstPaintTime: 0,
-            firstPaintAfterLoadTime: 0,
-            navigationType: 'other',
-            requestTime: 0,
-            startLoadTime: 0,
-            type: 'other'
-        };
-    }
+    csi: function () { return {} },
+    loadTimes: function () { return {} }
 };
 
 // Define chrome object with proper descriptor
@@ -80,9 +69,6 @@ Object.defineProperty(window, 'chrome', {
     enumerable: true,
     writable: false
 });
-
-// Make chrome object visible in global scope
-window.chrome = chromeObj;
 
 // Create plugin and mime type prototypes if they don't exist
 if (!window.MimeType) {
